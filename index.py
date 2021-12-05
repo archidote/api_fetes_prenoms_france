@@ -1,4 +1,7 @@
 import requests
+from datetime import date
+
+from requests.sessions import get_netrc_auth
 
 def getCelebrationFromDate(date): 
     url = "http://localhost/celebrationDays/celebrationFrenchDaysAPI.json"
@@ -13,7 +16,7 @@ def getCelebrationFromDate(date):
             return "La fête de "+item["name"]+" est le "+item["date"]+""
 
 
-def getName(name):
+def getCelebrationFromName(name):
 
     url = "http://localhost/celebrationDays/celebrationFrenchDaysAPI.json"
     params = dict(
@@ -26,5 +29,13 @@ def getName(name):
         if item["name"] == name:
             return "La fête de "+item["name"]+" est le "+item["date"]+""
 
-print(getName("Véronique"))
-print(getCelebrationFromDate("28/02"))
+def getTodayCelebration():
+    today = date.today()
+    d = today.strftime("%d/%m")
+    return d 
+
+    return ""
+
+print(getCelebrationFromName("Philippe"))
+print(getCelebrationFromDate("02/05"))
+#print(getCelebrationFromDate(getTodayCelebration()))

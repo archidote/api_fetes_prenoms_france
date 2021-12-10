@@ -34,9 +34,11 @@ def getFrenchClosedDay() :
     resp = requests.get(url=url)
     data = resp.json() 
 
-    # TO-DO : try to reverse the order of the json array. 
+    for key in data:
+        print(data[key]+" : "+key+"")
 
-    return data 
+    # TO DO : get the day from the date 
+
 print(getCelebrationFromName("Philippe"))
 print(getCelebrationFromDate("02/05"))
 print(getFrenchClosedDay())

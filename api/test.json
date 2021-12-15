@@ -1,0 +1,11 @@
+{
+    "John": {
+        "status":"Wait"
+    },
+    "Jennifer": {
+        "status":"Active"
+    },
+    "James": [
+        { "date": "01/01", "name": "Jour de l'an" }
+    ]
+}

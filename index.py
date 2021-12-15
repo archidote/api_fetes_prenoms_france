@@ -3,18 +3,18 @@ import requests
 from datetime import date
 from collections import OrderedDict
 
-data = json.load(open('celebrationFrenchDaysAPI.json', 'r'))
+data = json.load(open('api/celebrationFrenchDaysAPI.json', 'r'))
 
 def getCelebrationFromDate(date): 
 
-    for item in data["celebration"]:
+    for item in data["celebrations"]:
         if item["date"] == date:
             return "La fête de "+item["name"]+" est le "+item["date"]+""
 
 
 def getCelebrationFromName(name):
 
-    for item in data["celebration"]:
+    for item in data["celebrations"]:
         if item["name"] == name:
             return "La fête de "+item["name"]+" est le "+item["date"]+""
 

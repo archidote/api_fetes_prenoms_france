@@ -4,6 +4,7 @@ from datetime import *
 
 data = json.load(open('api/celebrationFrenchDaysAPI.json', 'r'))
 
+token = "mysupertoken"
 def getCelebrationFromDate(date): 
     x = ""
     for item in data["celebrations"]:

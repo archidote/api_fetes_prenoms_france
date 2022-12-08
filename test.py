@@ -42,20 +42,25 @@ def getFrenchClosedDay() :
     return ""
 
 def getCelebrationFromDate(month,day): 
+    original_day = day 
     day = day - 1 
+    result = []
     if month <= 12 and day <= len(data["months"][str(month)]): 
-        print (data["months"][str(month)][day])
+        result.append("Le "+str(original_day)+"/"+str(month)+" nous fêtons : "+data["months"][str(month)][day]+"")
+        return result 
     else : 
         return "Out of range !"
 
-def getCelebrationFromName(n): 
+def getCelebrationFromName(_name): 
+    _name = _name.lower()
+    result = []
     for name in data['months'].items():
-        if n in name[1] : 
+        if _name in name[1] : 
             list = name[1] # extract list from tuple() to use index() function
             month = name[0]
-            day = list.index(n) + 1 
-            print ("La fête de "+n+" est le "+str(day)+"/"+str(month))
-            # print pour afficher les fêtes multiple et return pour afficher les fêtes unique 
-            return ""
-print (getCelebrationFromDate(1,3))
-print (getCelebrationFromName("Philippe"))
+            day = list.index(_name) + 1 
+            result.append("La fête de "+_name+" est le "+str(day)+"/"+str(month))
+    return result
+
+print (getCelebrationFromDate(3,3))
+print (getCelebrationFromName("Benoit"))

@@ -1,20 +1,20 @@
 {
   "months": {
       "1": [
-          "Jour de l'an",
-          "Basile", 
-          "Geneviève",
-          "Benoit"
+          "jour de l'an",
+          "basile", 
+          "geneviève",
+          "benoit"
       ],
       "2": [
-          "Ella",
-          "La Chandeleur",
-          "Blaise"
+          "ella",
+          "la chandeleur",
+          "blaise"
       ],
       "3": [
-            "Philippe",
-            "Benoit",
-            "Hi"
+            "philippe",
+            "benoit",
+            "hi"
     ]
   }
 }

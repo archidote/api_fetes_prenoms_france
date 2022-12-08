@@ -27,5 +27,12 @@ def list_programming_languages():
     return (in_memory_datastore)
 
 @app.route('/fetes/nom/<name>')
-def get_celebration(name):
+def get_celebration_from_name(name):
     return {name:getCelebrationFromName(name)}
+ 
+@app.route('/fetes/date/<day>/<month>')
+def get_celebration_from_date(day,month):
+   
+     day = int(day) ; month = int (month)
+     return {"result":getCelebrationFromDate(day,month)}
+ 

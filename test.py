@@ -3,43 +3,31 @@ import requests
 from datetime import *
 
 data = json.load(open('api/2.json', 'r'))
+today = date.today()
             
 def getTodayDate():
 
-    today = date.today()
+    
     d = today.strftime("%d/%m")
     return d 
 
-def isTodayAClosedDay() : 
+def is_a_closed_day(day,month) : 
 
-    today = date.today()
-    d = today.strftime("%Y/%m/%d")   
+    day = str(day)
+    month = str(month)
     year = today.strftime("%Y")
-
+    daymonth = month+"-"+day
+    _return = []
     url = "https://calendrier.api.gouv.fr/jours-feries/metropole/"+year+".json"
 
     resp = requests.get(url=url)
     data = resp.json() 
-
-    for dateAttribut in data:        
-        if d in data :
-            return "Jour férié"
-        else : 
-            return ""
-
-def getFrenchClosedDay() : 
-
-    today = date.today()
-    year = today.strftime("%Y")
-
-    url = "https://calendrier.api.gouv.fr/jours-feries/metropole/"+year+".json"
-
-    resp = requests.get(url=url)
-    data = resp.json() 
-
-    for key in data:
-        print(data[key]+" : "+key+"")
-    return ""
+    
+    for key, value  in data.items() : 
+        if daymonth in key : 
+            _return.append("Le "+str(day)+"/"+month+"/"+year+" est un jour férié : "+value)   
+    return _return
+    
 
 def getCelebrationFromDate(day,month): 
     
@@ -50,7 +38,7 @@ def getCelebrationFromDate(day,month):
     if month <= 12 and day <= len(data["months"][str(month)]): 
         if original_day < 10 and int(month) < 10 : 
             result.append("Le 0"+str(original_day)+"/0"+str(month)+" nous fêtons : "+data["months"][str(month)][day]+"")
-        elif original_day > 10 and int(month) < 10 : 
+        elif original_day >= 10 and int(month) < 10 : 
             result.append("Le "+str(original_day)+"/0"+str(month)+" nous fêtons : "+data["months"][str(month)][day]+"")
         else : 
             result.append("Le "+str(original_day)+"/"+str(month)+" nous fêtons : "+data["months"][str(month)][day]+"")
@@ -73,7 +61,7 @@ def getCelebrationFromName(_name):
             day = list.index(_name) + 1 
             if day < 10 and int(month) < 10 : 
                 result.append("La fête de "+_name+" est le 0"+str(day)+"/0"+str(month))
-            elif day > 10 and int(month) < 10 : 
+            elif day >= 10 and int(month) < 10 : 
                 result.append("La fête de "+_name+" est le "+str(day)+"/0"+str(month))
             else : 
                 result.append("La fête de "+_name+" est le "+str(day)+"/"+str(month))
@@ -83,6 +71,15 @@ def getCelebrationFromName(_name):
         result.append(_name+" est fêté "+str(i)+" fois dans l'année.")
         
     return result
+
+def today_celebration() : 
+    # Check first, it doay is a clodes day. 
+    # Otherwise, display the celebration name and date 
+    return
+
+# print (getTodayDate())
+print (is_a_closed_day("01","01"))
+
 
 # print (getCelebrationFromDate(3,3))
 # print (getCelebrationFromName("Benoit"))

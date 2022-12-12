@@ -7,9 +7,11 @@ today = date.today()
             
 def getTodayDate():
 
-    
-    d = today.strftime("%d/%m")
-    return d 
+    date = []
+    date.append(today.strftime("%m"))
+    date.append(today.strftime("%m"))
+    date.append(today.strftime("%y"))
+    return date 
 
 def is_a_closed_day(day,month) : 
 
@@ -17,7 +19,6 @@ def is_a_closed_day(day,month) :
     month = str(month)
     year = today.strftime("%Y")
     daymonth = month+"-"+day
-    _return = []
     url = "https://calendrier.api.gouv.fr/jours-feries/metropole/"+year+".json"
 
     resp = requests.get(url=url)
@@ -25,8 +26,9 @@ def is_a_closed_day(day,month) :
     
     for key, value  in data.items() : 
         if daymonth in key : 
+            _return = []
             _return.append("Le "+str(day)+"/"+month+"/"+year+" est un jour férié : "+value)   
-    return _return
+            return _return
     
 
 def getCelebrationFromDate(day,month): 
@@ -73,12 +75,18 @@ def getCelebrationFromName(_name):
     return result
 
 def today_celebration() : 
+    
+    date = getTodayDate()
+    day = int(date[0])
+    month = int(date[1])
+    is_a_closed_day(day,month)
+    # getCelebrationFromDate (day,month)
+
     # Check first, it doay is a clodes day. 
     # Otherwise, display the celebration name and date 
-    return
 
-# print (getTodayDate())
-print (is_a_closed_day("01","01"))
+# print (today_celebration())
+# print (is_a_closed_day("01","01"))
 
 
 # print (getCelebrationFromDate(3,3))

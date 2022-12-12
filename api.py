@@ -25,12 +25,25 @@ app = Flask(__name__)
 @app.get('/fetes')
 def list_programming_languages():
     return (in_memory_datastore)
+ 
+@app.route('/today')
+def get_today_celebration(name):
+    return {name:getCelebrationFromName(name)}
 
-@app.route('/fetes/nom/<name>')
+# @app.route('/fetes/month/<name>')
+# def get_celebration_from_name(name):
+#     return {name:getCelebrationFromName(name)}
+
+
+# @app.route('/event/<day>/<month>')
+# def get_celebration_from_name(name):
+#     return {name:getCelebrationFromName(name)}
+ 
+@app.route('/fetes/<name>')
 def get_celebration_from_name(name):
     return {name:getCelebrationFromName(name)}
  
-@app.route('/fetes/date/<day>/<month>')
+@app.route('/fetes/<day>/<month>')
 def get_celebration_from_date(day,month):
    
      day = int(day) ; month = int (month)

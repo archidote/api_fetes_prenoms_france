@@ -2,13 +2,13 @@ import json
 import requests
 from datetime import *
 
-data = json.load(open('api/2.json', 'r'))
+data = json.load(open('database/calendar.json', 'r'))
 today = date.today()
-            
+    
 def getTodayDate():
 
     date = []
-    date.append(today.strftime("%m"))
+    date.append(today.strftime("%d"))
     date.append(today.strftime("%m"))
     date.append(today.strftime("%y"))
     return date 
@@ -25,9 +25,14 @@ def is_a_closed_day(day,month) :
     data = resp.json() 
     
     for key, value  in data.items() : 
+        _return = []
         if daymonth in key : 
-            _return = []
+            _return.append(True)
             _return.append("Le "+str(day)+"/"+month+"/"+year+" est un jour férié : "+value)   
+            return _return
+        else : 
+            _return.append(False)
+            _return.append("Le "+str(day)+"/"+month+"/"+year+" n'est pas un jour férié.")   
             return _return
     
 
@@ -50,8 +55,12 @@ def getCelebrationFromDate(day,month):
     else : 
         result.append("Out of range !")
         return result
+    
+    
+def get_celebrations_from_month(month): 
+    return data["months"][(str(month))]
 
-def getCelebrationFromName(_name): 
+def get_celebration_from_name(_name): 
     
     _name = _name.lower()
     result = []
@@ -74,20 +83,38 @@ def getCelebrationFromName(_name):
         
     return result
 
-def today_celebration() : 
+def celebration(today_or_tomorrow) : 
     
+    print (today_or_tomorrow)
     date = getTodayDate()
     day = int(date[0])
     month = int(date[1])
-    is_a_closed_day(day,month)
-    # getCelebrationFromDate (day,month)
+    
+    _return = ""
+    
+    if today_or_tomorrow == 1 : 
+        day = int(date[0]) + 1 
+    
+    closed_or_not = is_a_closed_day(day,month)
+    
+    if  closed_or_not[0] == True : 
+        print (1)
+        _return = closed_or_not[1]
+    else : 
+        print (2)
+        _return =  closed_or_not[1] 
+        
+    return _return
 
-    # Check first, it doay is a clodes day. 
-    # Otherwise, display the celebration name and date 
+
+
+
+
+
+
+
 
 # print (today_celebration())
 # print (is_a_closed_day("01","01"))
-
-
 # print (getCelebrationFromDate(3,3))
-# print (getCelebrationFromName("Benoit"))
+# print (get_celebration_from_name("Benoit"))

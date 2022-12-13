@@ -1,3 +1,0 @@
-Une fête peut être une apparaitre une seule fois dans le mois. 
-Seiulement la première occurence sera "détecté". 
-Normallement cela ne pose pas de pb, vu qu'à ma connaissance, cela n'est pas possible dans le calendrier gregorien. 

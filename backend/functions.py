@@ -117,4 +117,4 @@ def celebration(today_or_tomorrow) :
 # print (today_celebration())
 # print (is_a_closed_day("01","01"))
 # print (getCelebrationFromDate(3,3))
-# print (get_celebration_from_name("Benoit"))
+print (get_celebration_from_name("Benoit"))

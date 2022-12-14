@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import *
 import json 
 from backend.functions import *
 
@@ -8,13 +8,17 @@ with open('database/calendar.json') as f:
 app = Flask(__name__)
    
 
-@app.get('/fetes')
+@app.route('/fetes', methods=['GET', 'POST'])
 def all():
-   month = request.args.get('month', type = int)
-   if month : 
-      return get_celebrations_from_month(month)
-   else :
-      return in_memory_datastore
+   if request.method == 'GET' :    
+      month = request.args.get('month', type = int)
+      if month : 
+         return get_celebrations_from_month(month)
+      else :
+         return in_memory_datastore
+   elif request.method == 'POST' : 
+      month = request.json["month"]
+      return {"result:":get_celebrations_from_month(month)}
    
 @app.route('/fetes/<day>/<month>')
 def get_celebration_from_date(day,month):
@@ -23,7 +27,7 @@ def get_celebration_from_date(day,month):
      return {"result":getCelebrationFromDate(day,month)}
 
 @app.route('/fetes/<name>')
-def get_celebration_from_name(name):
+def get_name(name):
     return {name:get_celebration_from_name(name)}
  
 @app.route('/today')

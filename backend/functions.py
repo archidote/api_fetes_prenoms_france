@@ -2,6 +2,7 @@ import json
 import requests
 from datetime import *
 
+########################################## CORE DATA #########################################
 data = json.load(open('database/calendar.json', 'r'))
 today = date.today()
     
@@ -13,8 +14,15 @@ def getTodayDate():
     date.append(today.strftime("%y"))
     return date 
 
-def is_a_closed_day(day,month) : 
+_date = getTodayDate()
+day = int(_date[0])
+month = int(_date[1])
+year = int(_date[2])
 
+########################################## </CORE DATA> #########################################
+
+def est_ce_un_jour_ferie(day,month) : 
+    
     day = str(day)
     month = str(month)
     year = today.strftime("%Y")
@@ -24,17 +32,16 @@ def is_a_closed_day(day,month) :
     resp = requests.get(url=url)
     data = resp.json() 
     
+    _return = []
     for key, value  in data.items() : 
-        _return = []
         if daymonth in key : 
-            _return.append(True)
-            _return.append("Le "+str(day)+"/"+month+"/"+year+" est un jour férié : "+value)   
-            return _return
-        else : 
-            _return.append(False)
-            _return.append("Le "+str(day)+"/"+month+"/"+year+" n'est pas un jour férié.")   
-            return _return
-    
+            _return = "Le "+str(day)+"/"+month+"/"+year+" est un jour férié : "+value
+
+    if len(_return) < 1 : 
+        _return = "Le "+str(day)+"/"+month+"/"+year+" n'est pas un jour férié."
+        
+    return _return 
+
 
 def getCelebrationFromDate(day,month): 
     
@@ -43,27 +50,31 @@ def getCelebrationFromDate(day,month):
     result = []
     
     if month <= 12 and day <= len(data["months"][str(month)]): 
-        if original_day < 10 and int(month) < 10 : 
+        if original_day < 10 and month < 10 : 
             result.append("Le 0"+str(original_day)+"/0"+str(month)+" nous fêtons : "+data["months"][str(month)][day]+"")
-        elif original_day >= 10 and int(month) < 10 : 
+            day = "0"+str(original_day)
+            month = "0"+str(month)
+        elif original_day >= 10 and month < 10 : 
             result.append("Le "+str(original_day)+"/0"+str(month)+" nous fêtons : "+data["months"][str(month)][day]+"")
+            month = "0"+str(month)
         else : 
             result.append("Le "+str(original_day)+"/"+str(month)+" nous fêtons : "+data["months"][str(month)][day]+"")
         
+        result.append(est_ce_un_jour_ferie(day,month))
         return result 
     
     else : 
-        result.append("Out of range !")
+        result.append("Le mois ou le jour renseigné n'est pas correct.")
         return result
     
     
-def get_celebrations_of_month(month): 
+def fetes_du_mois(month): 
     if month >= 1 and month <= 12 : 
         return data["months"][(str(month))]
     else : 
         return ["Mois inexistant ! ("+str(month)+")"]
 
-def get_celebration_from_name(_name): 
+def fetes_via_nom(_name): 
     
     _name = _name.lower()
     result = []
@@ -73,7 +84,7 @@ def get_celebration_from_name(_name):
             list = name[1] # extract list from tuple() to use index() function
             month = name[0]
             day = list.index(_name) + 1 
-            jour_feries = is_a_closed_day(day,month)
+            jour_feries = est_ce_un_jour_ferie(day,month)
             if day < 10 and int(month) < 10 : 
                 result.append("La fête de "+_name+" est le 0"+str(day)+"/0"+str(month))
             elif day >= 10 and int(month) < 10 : 
@@ -81,44 +92,23 @@ def get_celebration_from_name(_name):
             else : 
                 result.append("La fête de "+_name+" est le "+str(day)+"/"+str(month))
             i = i + 1 
-        # result.append(jour_feries[1])
 
     if len(result) > 1 : 
         result.append(_name+" est fêté "+str(i)+" fois dans l'année.")
     else : 
         result = ["La fête de "+_name+" n'est pas référencé"]
+    
     return result
 
-def celebration(today_or_tomorrow) : 
-    
-    print (today_or_tomorrow)
-    date = getTodayDate()
-    day = int(date[0])
-    month = int(date[1])
-    
-    
-    if today_or_tomorrow == 1 : 
-        day = int(date[0]) + 1 
-    
-    closed_or_not = is_a_closed_day(day,month)
-    print (closed_or_not)
-    
-    if  closed_or_not[0] == True : 
-        return closed_or_not[1]
-    else : 
-        return closed_or_not[1]
-    
-
-
 def demain(): 
-    return 
+    demain = day + 1 
+    return getCelebrationFromDate(demain,month)
 
 def hier() : 
-    return 
+    hier = day - 1 
+    return getCelebrationFromDate(hier,month)
 
 def aujourdhui() : 
-    return 
+    return getCelebrationFromDate(day,month) 
 
-# print (is_a_closed_day("01","01"))
-# print (getCelebrationFromDate(3,3))
-# print (get_celebration_from_name("Benoit"))
+print (est_ce_un_jour_ferie("11","11"))

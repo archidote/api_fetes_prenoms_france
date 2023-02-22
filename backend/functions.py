@@ -57,8 +57,11 @@ def getCelebrationFromDate(day,month):
         return result
     
     
-def get_celebrations_from_month(month): 
-    return data["months"][(str(month))]
+def get_celebrations_of_month(month): 
+    if month >= 1 and month <= 12 : 
+        return data["months"][(str(month))]
+    else : 
+        return ["Mois inexistant ! ("+str(month)+")"]
 
 def get_celebration_from_name(_name): 
     
@@ -70,6 +73,7 @@ def get_celebration_from_name(_name):
             list = name[1] # extract list from tuple() to use index() function
             month = name[0]
             day = list.index(_name) + 1 
+            jour_feries = is_a_closed_day(day,month)
             if day < 10 and int(month) < 10 : 
                 result.append("La fête de "+_name+" est le 0"+str(day)+"/0"+str(month))
             elif day >= 10 and int(month) < 10 : 
@@ -77,10 +81,12 @@ def get_celebration_from_name(_name):
             else : 
                 result.append("La fête de "+_name+" est le "+str(day)+"/"+str(month))
             i = i + 1 
-            
+        # result.append(jour_feries[1])
+
     if len(result) > 1 : 
         result.append(_name+" est fêté "+str(i)+" fois dans l'année.")
-        
+    else : 
+        result = ["La fête de "+_name+" n'est pas référencé"]
     return result
 
 def celebration(today_or_tomorrow) : 
@@ -90,31 +96,29 @@ def celebration(today_or_tomorrow) :
     day = int(date[0])
     month = int(date[1])
     
-    _return = ""
     
     if today_or_tomorrow == 1 : 
         day = int(date[0]) + 1 
     
     closed_or_not = is_a_closed_day(day,month)
+    print (closed_or_not)
     
     if  closed_or_not[0] == True : 
-        print (1)
-        _return = closed_or_not[1]
+        return closed_or_not[1]
     else : 
-        print (2)
-        _return =  closed_or_not[1] 
-        
-    return _return
+        return closed_or_not[1]
+    
 
 
+def demain(): 
+    return 
 
+def hier() : 
+    return 
 
+def aujourdhui() : 
+    return 
 
-
-
-
-
-# print (today_celebration())
 # print (is_a_closed_day("01","01"))
 # print (getCelebrationFromDate(3,3))
-print (get_celebration_from_name("Benoit"))
+# print (get_celebration_from_name("Benoit"))

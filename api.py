@@ -13,12 +13,12 @@ def all():
    if request.method == 'GET' :    
       month = request.args.get('month', type = int)
       if month : 
-         return get_celebrations_from_month(month)
+         return get_celebrations_of_month(month)
       else :
          return in_memory_datastore
-   elif request.method == 'POST' : 
-      month = request.json["month"]
-      return {"result:":get_celebrations_from_month(month)}
+   # elif request.method == 'POST' : 
+   #    month = request.json["month"]
+   #    return {"result:":get_celebrations_of_month(month)}
    
 @app.route('/fetes/<day>/<month>')
 def get_celebration_from_date(day,month):
@@ -36,5 +36,9 @@ def get_today_celebration():
  
 @app.route('/tomorrow')
 def get_tomorrow_celebration():
+    return {"result":celebration(1)}
+
+@app.route('/yesterday')
+def get_yesterday_celebration():
     return {"result":celebration(1)}
 

@@ -1,10 +1,7 @@
 from flask import *
 import json 
 from backend.functions import *
-
-with open('database/calendar.json') as f:
-   in_memory_datastore = json.load(f)
-   
+ 
 app = Flask(__name__)
    
 
@@ -15,7 +12,7 @@ def all():
       if month : 
          return fetes_du_mois(month)
       else :
-         return in_memory_datastore
+         return toutes_les_fetes()
    # elif request.method == 'POST' : 
    #    month = request.json["month"]
    #    return {"result:":get_celebrations_of_month(month)}
@@ -42,3 +39,6 @@ def get_tomorrow_celebration():
 def get_yesterday_celebration():
     return {"result":hier}
 
+@app.route('/')
+def racine():
+    return {"result":"Consultez la documentation : "}

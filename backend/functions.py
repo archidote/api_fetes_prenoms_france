@@ -3,7 +3,7 @@ import requests
 from datetime import *
 
 ########################################## CORE DATA #########################################
-data = json.load(open('database/calendar.json', 'r'))
+data = json.load(open('database/calendrier.json', 'r'))
 today = date.today()
     
 def getTodayDate():
@@ -76,7 +76,8 @@ def fetes_du_mois(month):
 
 def fetes_via_nom(_name): 
     
-    _name = _name.lower()
+    _name = _name.capitalize()
+    print (_name)
     result = []
     i = 0 
     for name in data['months'].items():
@@ -111,4 +112,5 @@ def hier() :
 def aujourdhui() : 
     return getCelebrationFromDate(day,month) 
 
-print (est_ce_un_jour_ferie("11","11"))
+def toutes_les_fetes() : 
+    return data

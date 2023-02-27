@@ -74,7 +74,7 @@ def fetes_du_mois(month):
     else : 
         return ["Mois inexistant ! ("+str(month)+")"]
 
-def fetes_via_nom(_name): 
+def fete_via_nom(_name): 
     
     _name = _name.capitalize()
     print (_name)
@@ -85,20 +85,20 @@ def fetes_via_nom(_name):
             list = name[1] # extract list from tuple() to use index() function
             month = name[0]
             day = list.index(_name) + 1 
-            jour_feries = est_ce_un_jour_ferie(day,month)
             if day < 10 and int(month) < 10 : 
                 result.append("La fête de "+_name+" est le 0"+str(day)+"/0"+str(month))
+                # result.append(est_ce_un_jour_ferie(day,month))
             elif day >= 10 and int(month) < 10 : 
                 result.append("La fête de "+_name+" est le "+str(day)+"/0"+str(month))
+                # result.append(est_ce_un_jour_ferie(day,month))
             else : 
                 result.append("La fête de "+_name+" est le "+str(day)+"/"+str(month))
+                # result.append(est_ce_un_jour_ferie(day,month))
             i = i + 1 
-
+            
     if len(result) > 1 : 
         result.append(_name+" est fêté "+str(i)+" fois dans l'année.")
-    else : 
-        result = ["La fête de "+_name+" n'est pas référencé"]
-    
+        
     return result
 
 def demain(): 
@@ -114,3 +114,5 @@ def aujourdhui() :
 
 def toutes_les_fetes() : 
     return data
+
+print (fete_via_nom("benoit"))

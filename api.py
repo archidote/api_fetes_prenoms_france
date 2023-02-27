@@ -25,7 +25,7 @@ def get_celebration_from_date(day,month):
 
 @app.route('/fetes/<name>')
 def get_name(name):
-    return {name:fetes_via_nom(name)}
+    return {name:fete_via_nom(name)}
  
 @app.route('/aujourdhui')
 def get_today_celebration():

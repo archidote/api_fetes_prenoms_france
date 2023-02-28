@@ -13,31 +13,27 @@ def all():
          return fetes_du_mois(month)
       else :
          return toutes_les_fetes()
-   # elif request.method == 'POST' : 
-   #    month = request.json["month"]
-   #    return {"result:":get_celebrations_of_month(month)}
    
-@app.route('/fetes/<day>/<month>')
-def get_celebration_from_date(day,month):
-   
-     day = int(day) ; month = int (month)
-     return {"result":getCelebrationFromDate(day,month)}
+@app.route('/fetes/<jour>/<mois>')
+def fete_prenom_depuis_date(jour,mois):
+     jour = int(jour) ; mois = int (mois)
+     return {"result":fete_via_date(jour,mois)}
 
-@app.route('/fetes/<name>')
-def get_name(name):
-    return {"result":fete_via_nom(name)}
+@app.route('/fetes/<prenom>')
+def fete_prenom(prenom):
+    return {"result":fete_via_nom(prenom)}
  
 @app.route('/aujourdhui')
-def get_today_celebration():
+def fete_du_jour():
     return {"result":aujourdhui()}
  
-@app.route('/tomorrow')
-def get_tomorrow_celebration():
+@app.route('/demain')
+def fete_demain():
     return {"result":demain()}
 
-@app.route('/yesterday')
-def get_yesterday_celebration():
-    return {"result":hier}
+@app.route('/hier')
+def fete_hier():
+    return {"result":hier()}
 
 @app.route('/')
 def racine():

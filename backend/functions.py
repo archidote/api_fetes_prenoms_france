@@ -43,7 +43,7 @@ def est_ce_un_jour_ferie(day,month) :
     return _return 
 
 
-def getCelebrationFromDate(day,month): 
+def fete_via_date(day,month): 
     
     result = []
     
@@ -99,16 +99,15 @@ def fete_via_nom(_name):
                 
 def demain(): 
     demain = day + 1 
-    return getCelebrationFromDate(demain,month)
+    print (demain,month)
+    return fete_via_date(demain,month)
 
 def hier() : 
     hier = day - 1 
-    return getCelebrationFromDate(hier,month)
+    return fete_via_date(hier,month)
 
 def aujourdhui() : 
-    return getCelebrationFromDate(day,month) 
+    return fete_via_date(day,month) 
 
 def toutes_les_fetes() : 
     return data
-
-print (fete_via_nom("Jacques"))

@@ -35,6 +35,15 @@ def fete_demain():
 def fete_hier():
     return {"result":hier()}
 
+@app.route('/bissextile')
+def type_annee():
+    return {Annee:bissextile(Annee)}
+
+@app.route('/bissextile/<annee>')
+def type_annee_choix(annee):
+    annee = int(annee)
+    return {annee:bissextile(annee)}
+
 @app.route('/')
 def racine():
     return {"result":"Consultez la documentation : "}

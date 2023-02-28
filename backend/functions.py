@@ -12,12 +12,16 @@ def getTodayDate():
     date.append(today.strftime("%d"))
     date.append(today.strftime("%m"))
     date.append(today.strftime("%y"))
+    date.append(today.strftime("%Y"))
     return date 
 
 _date = getTodayDate()
 day = int(_date[0])
 month = int(_date[1])
-year = int(_date[2])
+annee = int(_date[2])
+Annee = int(_date[3])
+
+print (Annee)
 
 ########################################## </CORE DATA> #########################################
 
@@ -111,3 +115,10 @@ def aujourdhui() :
 
 def toutes_les_fetes() : 
     return data
+
+def bissextile(annee): 
+    if(annee%4==0 and annee%100!=0 or annee%400==0):
+        return True 
+    else:
+        return False 
+        

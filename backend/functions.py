@@ -45,20 +45,19 @@ def est_ce_un_jour_ferie(day,month) :
 
 def getCelebrationFromDate(day,month): 
     
-    original_day = day 
-    day = day - 1 
     result = []
     
     if month <= 12 and day <= len(data["months"][str(month)]): 
-        if original_day < 10 and month < 10 : 
-            result.append("Le 0"+str(original_day)+"/0"+str(month)+" nous fêtons : "+data["months"][str(month)][day]+"")
-            day = "0"+str(original_day)
+        if day < 10 and month < 10 : 
+            print (day,month)
+            result.append("Le 0"+str(day)+"/0"+str(month)+" nous fêtons : "+data["months"][str(month)][day]+"")
+            day = "0"+str(day)
             month = "0"+str(month)
-        elif original_day >= 10 and month < 10 : 
-            result.append("Le "+str(original_day)+"/0"+str(month)+" nous fêtons : "+data["months"][str(month)][day]+"")
+        elif day >= 10 and month < 10 : 
+            result.append("Le "+str(day)+"/0"+str(month)+" nous fêtons : "+data["months"][str(month)][day]+"")
             month = "0"+str(month)
         else : 
-            result.append("Le "+str(original_day)+"/"+str(month)+" nous fêtons : "+data["months"][str(month)][day]+"")
+            result.append("Le "+str(day)+"/"+str(month)+" nous fêtons : "+data["months"][str(month)][day]+"")
         
         result.append(est_ce_un_jour_ferie(day,month))
         return result 
@@ -76,31 +75,28 @@ def fetes_du_mois(month):
 
 def fete_via_nom(_name): 
     
+    result = [] 
     _name = _name.capitalize()
-    print (_name)
-    result = []
     i = 0 
-    for name in data['months'].items():
-        if _name in name[1] : 
-            list = name[1] # extract list from tuple() to use index() function
-            month = name[0]
-            day = list.index(_name) + 1 
-            if day < 10 and int(month) < 10 : 
-                result.append("La fête de "+_name+" est le 0"+str(day)+"/0"+str(month))
-                # result.append(est_ce_un_jour_ferie(day,month))
-            elif day >= 10 and int(month) < 10 : 
-                result.append("La fête de "+_name+" est le "+str(day)+"/0"+str(month))
-                # result.append(est_ce_un_jour_ferie(day,month))
-            else : 
-                result.append("La fête de "+_name+" est le "+str(day)+"/"+str(month))
-                # result.append(est_ce_un_jour_ferie(day,month))
-            i = i + 1 
-            
+    for month in data["months"].values():
+        for names in month:
+            if _name in names:
+                indice = [i for i, s in enumerate(month) if _name in s]
+                day = indice[0]
+                _month = int(month[0])
+                if day < 10 and _month < 10 :
+                    result.append("La fête de "+_name+" est le 0"+str(day)+"/0"+str(_month))
+                elif day >= 10 and _month < 10 : 
+                    result.append("La fête de "+_name+" est le "+str(day)+"/0"+str(_month))
+                else : 
+                    result.append("La fête de "+_name+" est le "+str(day)+"/"+str(_month))
+                i = i + 1 
     if len(result) > 1 : 
         result.append(_name+" est fêté "+str(i)+" fois dans l'année.")
         
     return result
 
+                
 def demain(): 
     demain = day + 1 
     return getCelebrationFromDate(demain,month)
@@ -115,4 +111,4 @@ def aujourdhui() :
 def toutes_les_fetes() : 
     return data
 
-print (fete_via_nom("benoit"))
+print (fete_via_nom("Jacques"))

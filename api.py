@@ -27,15 +27,15 @@ def fete_prenom(prenom):
 def fete_du_jour():
     return {"result":aujourdhui()}
  
-@app.route('/demain')
+@app.route('/demain') # Gérer le 29/02 (bissexitle only) 
 def fete_demain():
     return {"result":demain()}
 
-@app.route('/hier')
+@app.route('/hier') # Gérer le 29/02 (bissexitle only) 
 def fete_hier():
     return {"result":hier()}
 
-@app.route('/bissextile')
+@app.route('/bissextile') # Gérer le 29/02 (bissexitle only) 
 def type_annee():
     return {Annee:bissextile(Annee)}
 

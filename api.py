@@ -45,7 +45,7 @@ def type_annee_choix(annee):
 
 @app.route('/')
 def racine():
-    return {"result":"Consultez la documentation : "}
+    return {"result":"Consultez la documentation : https://github.com/archidote/api_fetes_prenoms_france"}
 
 if __name__ == "__main__":
     serve(app, host="0.0.0.0", port=5000)

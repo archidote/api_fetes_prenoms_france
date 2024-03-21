@@ -3,6 +3,7 @@ from backend.functions import *
 from waitress import serve
 
 app = Flask(__name__)
+app.debug = True
 
 @app.route('/fetes', methods=['GET', 'POST'])
 def all():

@@ -1,4 +1,5 @@
 import json
+import unicodedata
 from datetime import *
 
 ########################################## <Données communes> #########################################
@@ -104,3 +105,13 @@ def num_mois_to_str(num):
         num = str(num)
         mois = json.load(open('database/mois.json', 'r'))
         return mois[num]
+
+def convert_to_non_accent(string):
+    """ Function to convert accent characters to non accent
+    characters.
+    :param string: String to be converted.
+    :type string: str
+    :return: str
+    """
+    return ''.join(ch for ch in unicodedata.normalize('NFKD', string)
+                   if not unicodedata.combining(ch))
